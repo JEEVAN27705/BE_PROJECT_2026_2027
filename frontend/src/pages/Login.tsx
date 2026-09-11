@@ -11,6 +11,7 @@ import '../styles/Login.css';
 import { useNavigate } from 'react-router-dom';
 
 import { loginRequest } from '../api/auth/login';
+import { useAuth } from '../context/AuthContext';
 
 interface LoginResponse {
   access_token: string;
@@ -26,6 +27,7 @@ export default function Login() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -68,9 +70,9 @@ export default function Login() {
         role,
       });
 
-      // Store JWT
+      // Store JWT through AuthContext
       if (data.access_token) {
-        localStorage.setItem('access_token', data.access_token);
+        login(data.access_token);
       }
 
       // Remember me
@@ -117,9 +119,7 @@ export default function Login() {
 
   return (
     <div className="app">
-
       <main className="main-content">
-
         <div className="login-container">
 
           <div className="welcome-section">
@@ -201,7 +201,6 @@ export default function Login() {
 
             {/* Remember Me */}
             <div className="form-options">
-
               <label className="checkbox-container">
 
                 <input
@@ -220,7 +219,6 @@ export default function Login() {
                 </span>
 
               </label>
-
             </div>
 
             {/* Login Button */}
@@ -234,6 +232,7 @@ export default function Login() {
                 ? 'Logging in...'
                 : 'Login'}
             </button>
+
           </form>
         </div>
       </main>
