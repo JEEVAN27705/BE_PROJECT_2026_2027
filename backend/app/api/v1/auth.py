@@ -63,7 +63,7 @@ def login_user(
     if not user:
         raise HTTPException(
             status_code=401,
-            detail="Invalid email or password"
+            detail="Invalid Email"
         )
 
     if not verify_password(
@@ -72,9 +72,15 @@ def login_user(
     ):
         raise HTTPException(
             status_code=401,
-            detail="Invalid email or password"
+            detail="Invalid Password"
         )
-
+    
+    if user.role != user_data.role:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid role"
+        )
+    
     access_token = create_access_token(
         data={"sub": str(user.id)}
     )

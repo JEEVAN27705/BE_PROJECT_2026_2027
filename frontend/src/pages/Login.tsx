@@ -81,11 +81,32 @@ export default function Login() {
       } else {
         localStorage.removeItem('remember');
       }
+      
+      // Role-based navigation
+      switch (role) {
+        case 'hr':
+          navigate('/hr', { replace: true });
+          break;
 
-      // Temporary navigation.
-      // Role-based navigation will be added later
-      // using the authenticated user information.
-      navigate('/', { replace: true });
+        case 'team_lead':
+          navigate('/team-lead', { replace: true });
+          break;
+
+        case 'manager':
+          navigate('/manager', { replace: true });
+          break;
+
+        case 'stakeholder':
+          navigate('/stakeholder', { replace: true });
+          break;
+
+        case 'employee':
+          navigate('/employee', { replace: true });
+          break;
+
+        default:
+          setError('Invalid role');
+      }
 
     } catch (err: unknown) {
       if (err instanceof Error) {

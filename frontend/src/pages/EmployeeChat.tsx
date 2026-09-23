@@ -3,7 +3,7 @@ import {
   type FormEvent,
   type KeyboardEvent,
 } from 'react';
-
+import { useNavigate } from "react-router-dom";
 import '../styles/EmployeeChat.css';
 
 interface Message {
@@ -15,6 +15,7 @@ interface Message {
 export default function EmployeeChat() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const navigate = useNavigate();
 
   const handleSend = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -136,7 +137,9 @@ export default function EmployeeChat() {
 
           </div>
 
-          <button className="logout-button">
+          <button className="logout-button"
+            onClick={() => navigate("/login")}
+            >
             <span>↪</span>
             Logout
           </button>
