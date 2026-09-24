@@ -1,0 +1,252 @@
+.sidebar {
+  width: 270px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 28px 16px;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fbfbff 100%
+    );
+  border-right: 1px solid #ececf4;
+  color: #202142;
+  z-index: 1000;
+}
+
+/* =========================
+   BRAND
+   ========================= */
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 4px 10px;
+  margin-bottom: 42px;
+}
+
+.brand-mark {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background:
+    linear-gradient(
+      145deg,
+      #24265c,
+      #17183e
+    );
+  color: #ffffff;
+  box-shadow:
+    0 8px 20px rgba(42, 44, 105, 0.18);
+}
+
+.brand-mark span {
+  font-size: 23px;
+}
+
+.brand-content h1 {
+  margin: 0;
+  color: #191a3e;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.brand-content span {
+  display: block;
+  margin-top: 6px;
+  color: #8b8ea6;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-label {
+  padding: 0 13px;
+  margin-bottom: 10px;
+  color: #9a9db2;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+}
+
+/* =========================
+   LINKS
+   ========================= */
+
+.sidebar-link {
+  position: relative;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 13px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #5e6179;
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background: #f6f5ff;
+  color: #484bc5;
+  transform: translateX(2px);
+}
+
+.sidebar-link.active {
+  background:
+    linear-gradient(
+      90deg,
+      #efeeff,
+      #f7f6ff
+    );
+  color: #4143c7;
+  font-weight: 600;
+}
+
+/* Active indicator */
+
+.sidebar-link.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 3px;
+  height: 24px;
+  border-radius: 0 4px 4px 0;
+  background: #5759df;
+}
+
+/* =========================
+   ICONS
+   ========================= */
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-icon svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sidebar-link.active .nav-icon {
+  color: #5153d6;
+}
+/* =========================
+   BOTTOM
+   ========================= */
+
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+/* =========================
+   LOGOUT
+   ========================= */
+
+.logout-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 13px;
+  border: none;
+  border-radius: 11px;
+  background: transparent;
+  color: #676a81;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+  background: #fff2f2;
+  color: #c54b55;
+}
+
+.logout-button:hover .nav-icon {
+  color: #c54b55;
+}
+
+/* =========================
+   FOOTER PROFILE
+   ========================= */
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 12px 10px;
+  border-radius: 12px;
+  background: #f8f8fc;
+}
+
+.footer-avatar {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #e9e8ff;
+  color: #4c4ecb;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.footer-info strong {
+  color: #333551;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.footer-info span {
+  color: #999caf;
+  font-size: 10px;
+}
