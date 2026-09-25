@@ -4,183 +4,201 @@ import './styles/HRDashboard.css';
 function HRDashboard() {
   return (
     <div className="hr-dashboard">
-
       <Sidebar />
-
       <main className="hr-dashboard-content">
-
-        {/* Page Header */}
-        <div className="dashboard-header">
-          <span className="dashboard-label">
-            HR MODULE
-          </span>
-
+        <div className="dashboard-header-custom">
           <h1>HR Dashboard</h1>
-
-          <p>
-            Design and implement the HR dashboard based on the
-            provided Figma reference.
-          </p>
+          <p>Overview of employees, retention health, and organizational knowledge continuity.</p>
         </div>
 
-        {/* Assignment Card */}
-        <section className="assignment-card">
-
-          {/* Assignment Header */}
-          <div className="assignment-header">
-            <div className="assignment-number">
-              01
+        <div className="metrics-grid">
+          {/* Card 1 */}
+          <div className="metric-card">
+            <div className="metric-card-header">
+              <span className="metric-title">TOTAL EMPLOYEES</span>
+              <div className="metric-icon purple-bg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><circle cx="12" cy="10" r="2"></circle><path d="M16 20c0-2.2-2.7-4-4-4s-4 1.8-4 4"></path></svg>
+              </div>
             </div>
+            <div className="metric-content">
+              <span className="metric-value">128</span>
+              <span className="metric-badge green-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 7L13.5 15.5L8.5 10.5L2 17"></path><path d="M16 7H22V13"></path></svg>
+                +4 mo
+              </span>
+            </div>
+            <div className="metric-progress"><div className="progress-bar blue-bar" style={{width: '60%'}}></div></div>
+          </div>
 
+          {/* Card 2 */}
+          <div className="metric-card">
+            <div className="metric-card-header">
+              <span className="metric-title">ACTIVE PROJECTS</span>
+              <div className="metric-icon purple-bg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              </div>
+            </div>
+            <div className="metric-content">
+              <span className="metric-value">12</span>
+              <span className="metric-badge grey-badge">
+                <span className="dot green-dot"></span> 100% staffed
+              </span>
+            </div>
+            <div className="metric-progress"><div className="progress-bar blue-bar" style={{width: '80%'}}></div></div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="metric-card">
+            <div className="metric-card-header">
+              <span className="metric-title">TO BE DISCUSSED</span>
+              <div className="metric-icon grey-bg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+            </div>
+            <div className="metric-content">
+              <span className="metric-value">36</span>
+              <span className="metric-badge red-badge">
+                8 due today
+              </span>
+            </div>
+            <div className="metric-progress">
+              <div className="progress-bar dark-bar" style={{width: '60%'}}></div>
+              <div className="progress-bar red-bar" style={{width: '20%'}}></div>
+            </div>
+          </div>
+
+          {/* Card 4 */}
+          <div className="metric-card">
+            <div className="metric-card-header">
+              <span className="metric-title">TO BE DISCUSSED</span>
+              <div className="metric-icon purple-bg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+              </div>
+            </div>
+            <div className="metric-content">
+              <span className="metric-value">248</span>
+            </div>
+            <div className="metric-progress"><div className="progress-bar blue-bar" style={{width: '90%'}}></div></div>
+          </div>
+        </div>
+
+        {/* Main Content Area: Project Team Allocation */}
+        <div className="main-content-card">
+          <div className="main-content-header">
+            <div className="main-icon purple-light-bg">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="2" x2="12" y2="22"></line><path d="M12 12h10"></path></svg>
+            </div>
             <div>
-              <h2>Dashboard UI Implementation</h2>
-
-              <p>
-                Create the HR Dashboard interface according to the
-                provided design reference.
-              </p>
+              <h2>Project Team Allocation</h2>
+              <p>Distribution of current team members across active initiatives.</p>
             </div>
           </div>
 
-          {/* Design Reference */}
-          <div className="assignment-section">
-            <h3>Design Reference</h3>
-
-            <p>
-              Use the following Figma design as the visual
-              reference for the HR Dashboard.
-            </p>
-
-            <a
-              href="https://www.figma.com/design/Tpu49iQu7nWDFjCr6IP9X0/Games?node-id=133-468&p=f&t=gNaUxrmiBKLUGOYM-0"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="figma-link"
-            >
-              Open Figma Design
-              <span>↗</span>
-            </a>
-          </div>
-
-          {/* Task Requirements */}
-          <div className="assignment-section">
-            <h3>Task Requirements</h3>
-
-            <ul>
-              <li>
-                Create the HR Dashboard UI based on the
-                provided Figma reference.
-              </li>
-
-              <li>
-                Make the page responsive.
-              </li>
-
-              <li>
-                Keep the existing Sidebar unchanged.
-              </li>
-
-              <li>
-                Do not modify Login, App, authentication,
-                or other modules.
-              </li>
-            </ul>
-          </div>
-
-          {/* Files You Can Modify */}
-          <div className="assignment-section">
-            <h3>Files You Can Modify</h3>
-
-            <div className="file-list">
-
-              <div className="file-item">
-                <span>📄</span>
-                <code>HRDashboard.tsx</code>
+          <div className="charts-container">
+            {/* Left: Bar Chart */}
+            <div className="bar-chart-section">
+              <div className="chart-header">
+                <div className="chart-title-left">
+                  <span className="chart-title">Headcount per Active Initiative</span>
+                  <span className="chart-subtitle">(Total: 90 deployed)</span>
+                </div>
+                <div className="chart-legend">
+                  <span className="dot purple-dot"></span> Active Assigned
+                </div>
               </div>
 
-              <div className="file-item">
-                <span>🎨</span>
-                <code>HRDashboard.css</code>
+              <div className="bar-chart">
+                <div className="y-axis">
+                  <span>25</span>
+                  <span>20</span>
+                  <span>15</span>
+                  <span>10</span>
+                  <span>5</span>
+                  <span>0</span>
+                </div>
+                
+                {/* Horizontal grid lines */}
+                <div className="grid-lines">
+                  <div className="grid-line" style={{bottom: '100%'}}></div>
+                  <div className="grid-line" style={{bottom: '80%'}}></div>
+                  <div className="grid-line" style={{bottom: '60%'}}></div>
+                  <div className="grid-line" style={{bottom: '40%'}}></div>
+                  <div className="grid-line" style={{bottom: '20%'}}></div>
+                  <div className="grid-line" style={{bottom: '0%'}}></div>
+                </div>
+
+                <div className="chart-bars">
+                  <div className="bar-group">
+                    <div className="bar-value">22</div>
+                    <div className="bar color-1" style={{height: `${(22/25)*100}%`}}></div>
+                    <div className="bar-label">Neural Ops</div>
+                  </div>
+                  <div className="bar-group">
+                    <div className="bar-value">18</div>
+                    <div className="bar color-2" style={{height: `${(18/25)*100}%`}}></div>
+                    <div className="bar-label">Alpha Core</div>
+                  </div>
+                  <div className="bar-group">
+                    <div className="bar-value">15</div>
+                    <div className="bar color-3" style={{height: `${(15/25)*100}%`}}></div>
+                    <div className="bar-label">Security & Gov</div>
+                  </div>
+                  <div className="bar-group">
+                    <div className="bar-value">14</div>
+                    <div className="bar color-4" style={{height: `${(14/25)*100}%`}}></div>
+                    <div className="bar-label">Data Pipeline</div>
+                  </div>
+                  <div className="bar-group">
+                    <div className="bar-value">12</div>
+                    <div className="bar color-5" style={{height: `${(12/25)*100}%`}}></div>
+                    <div className="bar-label">Retention Shield</div>
+                  </div>
+                  <div className="bar-group">
+                    <div className="bar-value">9</div>
+                    <div className="bar color-6" style={{height: `${(9/25)*100}%`}}></div>
+                    <div className="bar-label">Cloud Migration</div>
+                  </div>
+                </div>
               </div>
-
-            </div>
-          </div>
-
-          {/* Clone Repository */}
-          <div className="assignment-section">
-            <h3>Clone the Repository</h3>
-
-            <p>
-              Clone the project repository before starting the work.
-            </p>
-
-            <div className="command-box">
-
-              <div>
-                <span>1.</span>
-                <code>
-                  git clone https://github.com/JEEVAN27705/BE_PROJECT_2026_2027.git
-                </code>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Push Changes */}
-          <div className="assignment-section pr-section">
-
-            <h3>How to Push the Changes</h3>
-
-            <p>
-              After completing the work, commit your changes and
-              push them to the <strong>hr-dashboard</strong> branch.
-            </p>
-
-            <div className="command-box">
-
-              <div>
-                <span>1.</span>
-                <code>
-                  git status
-                </code>
-              </div>
-
-              <div>
-                <span>2.</span>
-                <code>
-                  git add frontend/src/pages/hr/HRDashboard.tsx
-                </code>
-              </div>
-
-              <div>
-                <span>3.</span>
-                <code>
-                  git add frontend/src/pages/hr/styles/HRDashboard.css
-                </code>
-              </div>
-
-              <div>
-                <span>4.</span>
-                <code>
-                  git commit -m "feat: create HR dashboard UI"
-                </code>
-              </div>
-
-              <div>
-                <span>5.</span>
-                <code>
-                  git push -u origin hr-dashboard
-                </code>
-              </div>
-
             </div>
 
+            {/* Right: Recruitment & Staffing */}
+            <div className="recruitment-section">
+              <h3>RECRUITMENT & STAFFING</h3>
+              
+              <div className="donut-chart-container">
+                <div className="donut-chart">
+                  <div className="donut-hole">
+                    <span className="donut-value">80%</span>
+                    <span className="donut-label">FILLED</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="staffing-stats">
+                <div className="stat-row">
+                  <div className="stat-label">
+                    <span className="dot blue-dot-large"></span> Hired Employees
+                  </div>
+                  <span className="stat-value">90</span>
+                </div>
+                <div className="stat-row">
+                  <div className="stat-label">
+                    <span className="dot orange-dot-large"></span> Open Requisitions
+                  </div>
+                  <span className="stat-value">22</span>
+                </div>
+                <div className="stat-row">
+                  <div className="stat-label">
+                    <span className="dot dark-dot-large"></span> Target Headcount
+                  </div>
+                  <span className="stat-value">112</span>
+                </div>
+              </div>
+            </div>
           </div>
-
-        </section>
-
+        </div>
       </main>
-
     </div>
   );
 }
