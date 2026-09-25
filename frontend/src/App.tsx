@@ -1,13 +1,6 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
-
+import { BrowserRouter, Routes, Route, Navigate,} from 'react-router-dom';
 import Login from './pages/Login';
 import EmployeeChat from './pages/EmployeeChat';
-
 import HRDashboard from './pages/hr/HRDashboard';
 import CreateCredentials from './pages/hr/CreateCredentials';
 import ManageCredentials from './pages/hr/ManageCredentials';

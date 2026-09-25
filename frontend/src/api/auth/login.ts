@@ -13,7 +13,7 @@ export async function loginRequest(
   data: LoginRequest
 ): Promise<LoginResponse> {
   const response = await fetch(
-    'http://127.0.0.1:8000/api/v1/auth/login',
+    `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
     {
       method: 'POST',
       headers: {
