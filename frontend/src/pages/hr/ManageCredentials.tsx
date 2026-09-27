@@ -4,6 +4,7 @@ import './styles/ManageCredentials.css';
 
 const employees = [
   {
+    id: 'EMP001',
     initials: 'RK',
     name: 'Rohan Kulkarni',
     email: 'rohan.kulkarni@cognishield.enterprise',
@@ -14,6 +15,7 @@ const employees = [
     avatarColor: 'bg-indigo-100 text-indigo-700'
   },
   {
+    id: 'EMP002',
     initials: 'NP',
     name: 'Neha Patel',
     email: 'neha.patel@cognishield.enterprise',
@@ -24,6 +26,7 @@ const employees = [
     avatarColor: 'bg-cyan-100 text-cyan-700'
   },
   {
+    id: 'EMP003',
     initials: 'VS',
     name: 'Vikram Shah',
     email: 'vikram.shah@cognishield.enterprise',
@@ -34,6 +37,7 @@ const employees = [
     avatarColor: 'bg-gray-100 text-gray-700'
   },
   {
+    id: 'EMP004',
     initials: 'PS',
     name: 'Priya Sharma',
     email: 'priya.sharma@cognishield.enterprise',
@@ -44,6 +48,7 @@ const employees = [
     avatarColor: 'bg-purple-100 text-purple-700'
   },
   {
+    id: 'EMP005',
     initials: 'AS',
     name: 'Arjun Singh',
     email: 'arjun.singh@cognishield.enterprise',
@@ -54,6 +59,7 @@ const employees = [
     avatarColor: 'bg-blue-100 text-blue-700'
   },
   {
+    id: 'EMP006',
     initials: 'MK',
     name: 'Meera Kapoor',
     email: 'meera.kapoor@cognishield.enterprise',
@@ -64,6 +70,7 @@ const employees = [
     avatarColor: 'bg-indigo-100 text-indigo-700'
   },
   {
+    id: 'EMP007',
     initials: 'AD',
     name: 'Aditya Deshmukh',
     email: 'aditya.deshmukh@cognishield.enterprise',
@@ -76,10 +83,18 @@ const employees = [
 ];
 
 function ManageCredentials() {
+
+  // ================= SEARCH =================
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // ================= SELECTED EMPLOYEE =================
+
   const [selectedEmployee, setSelectedEmployee] =
     useState<any>(null);
 
-  // Language dialog
+  // ================= LANGUAGE DIALOG =================
+
   const [showAddDialog, setShowAddDialog] =
     useState(false);
 
@@ -92,7 +107,8 @@ function ManageCredentials() {
     'Marathi'
   ]);
 
-  // Employee form states
+  // ================= EMPLOYEE FORM STATES =================
+
   const [gender, setGender] =
     useState('Female');
 
@@ -120,20 +136,46 @@ function ManageCredentials() {
   const [showConfirmPassword, setShowConfirmPassword] =
     useState(false);
 
-  // Team
+  // ================= TEAM =================
+
   const [teamName, setTeamName] =
     useState('Cloud Migration');
 
-  // Work permit
+  // ================= WORK PERMIT =================
+
   const [workPermit, setWorkPermit] =
     useState('Yes');
 
-  // Address
+  // ================= ADDRESS =================
+
   const [country, setCountry] =
     useState('India');
 
   const [state, setState] =
     useState('Maharashtra');
+
+  // ================= SEARCH FILTER =================
+
+  const filteredEmployees = employees.filter((emp) => {
+
+    const search = searchTerm
+      .toLowerCase()
+      .trim();
+
+    if (!search) {
+      return true;
+    }
+
+    return (
+      emp.id.toLowerCase().includes(search) ||
+      emp.name.toLowerCase().includes(search) ||
+      emp.email.toLowerCase().includes(search) ||
+      emp.role.toLowerCase().includes(search) ||
+      emp.team.toLowerCase().includes(search) ||
+      emp.domain.toLowerCase().includes(search) ||
+      emp.status.toLowerCase().includes(search)
+    );
+  });
 
   return (
     <div className="manage-employees-page">
@@ -165,7 +207,9 @@ function ManageCredentials() {
 
         <div className="page-header">
 
-          <h1>Manage Employees</h1>
+          <h1>
+            Manage Employees
+          </h1>
 
           <p>
             View, filter, edit, and manage employee records,
@@ -212,29 +256,24 @@ function ManageCredentials() {
             <input
               type="text"
               placeholder="Search by name, email, designation, or ID..."
+              value={searchTerm}
+              onChange={(e) =>
+                setSearchTerm(e.target.value)
+              }
             />
 
-          </div>
-
-
-          <div className="role-filter">
-
-            <span>All Roles</span>
-
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-
-              <polyline points="6 9 12 15 18 9" />
-
-            </svg>
+            {searchTerm && (
+              <button
+                type="button"
+                className="clear-search-btn"
+                onClick={() =>
+                  setSearchTerm('')
+                }
+                aria-label="Clear search"
+              >
+                ×
+              </button>
+            )}
 
           </div>
 
@@ -276,151 +315,183 @@ function ManageCredentials() {
 
               <tbody>
 
-                {employees.map((emp, index) => (
+                {filteredEmployees.length > 0 ? (
 
-                  <tr key={index}>
+                  filteredEmployees.map((emp) => (
 
-                    <td>
+                    <tr key={emp.id}>
 
-                      <div className="employee-details">
+                      {/* ================= EMPLOYEE DETAILS ================= */}
 
-                        <div
-                          className={`avatar ${emp.avatarColor}`}
-                        >
-                          {emp.initials}
+                      <td>
+
+                        <div className="employee-details">
+
+                          <div
+                            className={`avatar ${emp.avatarColor}`}
+                          >
+                            {emp.initials}
+                          </div>
+
+                          <div className="employee-info">
+
+                            <span className="employee-name">
+                              {emp.name}
+                            </span>
+
+                            <span className="employee-email">
+                              {emp.email}
+                            </span>
+
+                          </div>
+
                         </div>
 
-                        <div className="employee-info">
+                      </td>
 
-                          <span className="employee-name">
-                            {emp.name}
+
+                      {/* ================= ROLE & DOMAIN ================= */}
+
+                      <td>
+
+                        <div className="role-domain">
+
+                          <span className="role-name">
+                            {emp.role}
                           </span>
 
-                          <span className="employee-email">
-                            {emp.email}
+                          <span className="domain-name">
+                            {emp.domain}
                           </span>
 
                         </div>
 
-                      </div>
-
-                    </td>
+                      </td>
 
 
-                    <td>
+                      {/* ================= STATUS ================= */}
 
-                      <div className="role-domain">
+                      <td>
 
-                        <span className="role-name">
-                          {emp.role}
+                        <span
+                          className={`status-badge ${emp.status.toLowerCase()}`}
+                        >
+                          {emp.status}
                         </span>
 
-                        <span className="domain-name">
-                          {emp.domain}
-                        </span>
-
-                      </div>
-
-                    </td>
+                      </td>
 
 
-                    <td>
+                      {/* ================= ACTIONS ================= */}
 
-                      <span
-                        className={`status-badge ${emp.status.toLowerCase()}`}
-                      >
-                        {emp.status}
-                      </span>
+                      <td className="actions-cell">
 
-                    </td>
+                        <button
+                          className="view-profile-btn"
+                          onClick={() => {
 
+                            setSelectedEmployee(emp);
 
-                    <td className="actions-cell">
+                            setGender('Female');
 
-                      <button
-                        className="view-profile-btn"
-                        onClick={() => {
+                            setUserType('Intern');
 
-                          setSelectedEmployee(emp);
+                            setMaritalStatus(
+                              'Single / Unmarried'
+                            );
 
-                          setGender('Female');
+                            setDateOfBirth(
+                              '1992-12-04'
+                            );
 
-                          setUserType('Intern');
+                            setEmployeeStatus(
+                              emp.status === 'Active'
+                                ? 'Active'
+                                : 'Inactive'
+                            );
 
-                          setMaritalStatus(
-                            'Single / Unmarried'
-                          );
+                            setTeamName(
+                              emp.team
+                            );
 
-                          setDateOfBirth(
-                            '1992-12-04'
-                          );
+                            setWorkPermit('Yes');
 
-                          setEmployeeStatus(
-                            emp.status === 'Active'
-                              ? 'Active'
-                              : 'Inactive'
-                          );
+                            setCountry('India');
 
-                          setTeamName(
-                            emp.team
-                          );
+                            setState('Maharashtra');
 
-                          setWorkPermit('Yes');
+                            setPassword('');
 
-                          setCountry('India');
+                            setConfirmPassword('');
 
-                          setState('Maharashtra');
-
-                          setPassword('');
-
-                          setConfirmPassword('');
-
-                        }}
-                      >
-                        View Profile
-                      </button>
+                          }}
+                        >
+                          View Profile
+                        </button>
 
 
-                      <button className="more-options-btn">
-
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                        <button
+                          className="more-options-btn"
+                          type="button"
                         >
 
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="1"
-                          />
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
 
-                          <circle
-                            cx="12"
-                            cy="5"
-                            r="1"
-                          />
+                            <circle
+                              cx="12"
+                              cy="12"
+                              r="1"
+                            />
 
-                          <circle
-                            cx="12"
-                            cy="19"
-                            r="1"
-                          />
+                            <circle
+                              cx="12"
+                              cy="5"
+                              r="1"
+                            />
 
-                        </svg>
+                            <circle
+                              cx="12"
+                              cy="19"
+                              r="1"
+                            />
 
-                      </button>
+                          </svg>
 
+                        </button>
+
+                      </td>
+
+                    </tr>
+
+                  ))
+
+                ) : (
+
+                  /* ================= NO RESULTS ================= */
+
+                  <tr>
+
+                    <td
+                      colSpan={4}
+                      className="no-results"
+                    >
+                      No employees found matching "
+                      {searchTerm}
+                      "
                     </td>
 
                   </tr>
 
-                ))}
+                )}
 
               </tbody>
 
@@ -435,9 +506,19 @@ function ManageCredentials() {
 
             <div className="pagination-info">
 
-              Showing <strong>1 to 8</strong> of{' '}
+              Showing{' '}
 
-              <strong>148</strong> employees{' '}
+              <strong>
+                {filteredEmployees.length}
+              </strong>{' '}
+
+              of{' '}
+
+              <strong>
+                {employees.length}
+              </strong>{' '}
+
+              employees
 
               <span className="bullet">
                 •
@@ -454,7 +535,10 @@ function ManageCredentials() {
 
             <div className="pagination-controls">
 
-              <button className="page-nav-btn">
+              <button
+                className="page-nav-btn"
+                type="button"
+              >
 
                 <svg
                   width="12"
@@ -474,15 +558,24 @@ function ManageCredentials() {
               </button>
 
 
-              <button className="page-number active">
+              <button
+                className="page-number active"
+                type="button"
+              >
                 1
               </button>
 
-              <button className="page-number">
+              <button
+                className="page-number"
+                type="button"
+              >
                 2
               </button>
 
-              <button className="page-number">
+              <button
+                className="page-number"
+                type="button"
+              >
                 3
               </button>
 
@@ -490,12 +583,18 @@ function ManageCredentials() {
                 ...
               </span>
 
-              <button className="page-number">
+              <button
+                className="page-number"
+                type="button"
+              >
                 19
               </button>
 
 
-              <button className="page-nav-btn">
+              <button
+                className="page-nav-btn"
+                type="button"
+              >
 
                 <svg
                   width="12"
@@ -548,6 +647,7 @@ function ManageCredentials() {
 
             <button
               className="popup-close"
+              type="button"
               onClick={() =>
                 setSelectedEmployee(null)
               }
@@ -705,11 +805,37 @@ function ManageCredentials() {
 
                     <div className="mobile-input-group">
 
-                      <input
-                        type="text"
-                        defaultValue="+91"
+                      <select
                         className="country-code"
-                      />
+                        defaultValue="+91"
+                      >
+
+                        <option value="+91">
+                          🇮🇳 +91
+                        </option>
+
+                        <option value="+1">
+                          🇺🇸 +1
+                        </option>
+
+                        <option value="+81">
+                          🇯🇵 +81
+                        </option>
+
+                        <option value="+44">
+                          🇬🇧 +44
+                        </option>
+
+                        <option value="+61">
+                          🇦🇺 +61
+                        </option>
+
+                        <option value="+971">
+                          🇦🇪 +971
+                        </option>
+
+                      </select>
+
 
                       <input
                         type="text"
@@ -766,45 +892,55 @@ function ManageCredentials() {
                           selectedCountry ===
                           'India'
                         ) {
+
                           setState(
                             'Maharashtra'
                           );
+
                         }
 
                         else if (
                           selectedCountry ===
                           'United States'
                         ) {
+
                           setState(
                             'California'
                           );
+
                         }
 
                         else if (
                           selectedCountry ===
                           'United Kingdom'
                         ) {
+
                           setState(
                             'England'
                           );
+
                         }
 
                         else if (
                           selectedCountry ===
                           'Canada'
                         ) {
+
                           setState(
                             'Ontario'
                           );
+
                         }
 
                         else if (
                           selectedCountry ===
                           'Australia'
                         ) {
+
                           setState(
                             'New South Wales'
                           );
+
                         }
 
                       }}
@@ -856,6 +992,7 @@ function ManageCredentials() {
 
                       {country === 'India' && (
                         <>
+
                           <option value="Maharashtra">
                             Maharashtra
                           </option>
@@ -903,15 +1040,16 @@ function ManageCredentials() {
                           <option value="Goa">
                             Goa
                           </option>
+
                         </>
                       )}
 
 
                       {/* UNITED STATES */}
 
-                      {country ===
-                        'United States' && (
+                      {country === 'United States' && (
                         <>
+
                           <option value="California">
                             California
                           </option>
@@ -935,15 +1073,16 @@ function ManageCredentials() {
                           <option value="Illinois">
                             Illinois
                           </option>
+
                         </>
                       )}
 
 
                       {/* UNITED KINGDOM */}
 
-                      {country ===
-                        'United Kingdom' && (
+                      {country === 'United Kingdom' && (
                         <>
+
                           <option value="England">
                             England
                           </option>
@@ -959,6 +1098,7 @@ function ManageCredentials() {
                           <option value="Northern Ireland">
                             Northern Ireland
                           </option>
+
                         </>
                       )}
 
@@ -967,6 +1107,7 @@ function ManageCredentials() {
 
                       {country === 'Canada' && (
                         <>
+
                           <option value="Ontario">
                             Ontario
                           </option>
@@ -986,6 +1127,7 @@ function ManageCredentials() {
                           <option value="Manitoba">
                             Manitoba
                           </option>
+
                         </>
                       )}
 
@@ -994,6 +1136,7 @@ function ManageCredentials() {
 
                       {country === 'Australia' && (
                         <>
+
                           <option value="New South Wales">
                             New South Wales
                           </option>
@@ -1013,6 +1156,7 @@ function ManageCredentials() {
                           <option value="South Australia">
                             South Australia
                           </option>
+
                         </>
                       )}
 
@@ -1219,8 +1363,7 @@ function ManageCredentials() {
                       <button
                         type="button"
                         className={`segment ${
-                          userType ===
-                          'Freelancer'
+                          userType === 'Freelancer'
                             ? 'active'
                             : ''
                         }`}
@@ -1640,7 +1783,7 @@ function ManageCredentials() {
 
                     {confirmPassword &&
                       password !==
-                        confirmPassword && (
+                      confirmPassword && (
 
                         <span className="password-error">
                           Passwords do not match
@@ -1651,7 +1794,7 @@ function ManageCredentials() {
 
                     {confirmPassword &&
                       password ===
-                        confirmPassword && (
+                      confirmPassword && (
 
                         <span className="password-success">
                           Passwords match
@@ -1688,7 +1831,7 @@ function ManageCredentials() {
                   className="save-button"
                   disabled={
                     password !==
-                      confirmPassword &&
+                    confirmPassword &&
                     confirmPassword !== ''
                   }
                   onClick={() => {
@@ -1696,7 +1839,7 @@ function ManageCredentials() {
                     if (
                       password &&
                       password !==
-                        confirmPassword
+                      confirmPassword
                     ) {
                       return;
                     }
