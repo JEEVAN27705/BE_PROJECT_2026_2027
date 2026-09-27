@@ -85,7 +85,7 @@ export default function Login() {
       // Role-based navigation
       switch (role) {
         case 'hr':
-          navigate('/hr', { replace: true });
+          navigate('/hr/dashboard', { replace: true });
           break;
 
         case 'team_lead':
