@@ -1564,6 +1564,40 @@ function ManageCredentials() {
 
                   </div>
 
+                                    <div className="form-group">
+
+                    <label>
+                      Role
+                    </label>
+
+                    <select
+                      value={employeeStatus}
+                      onChange={(e) =>
+                        setEmployeeStatus(
+                          e.target.value
+                        )
+                      }
+                    >
+
+                      <option value="hr">
+                        HR
+                      </option>
+
+                      <option value="team-lead">
+                        Team Lead
+                      </option>
+
+                      <option value="manager">
+                        Manager
+                      </option>
+
+                      <option value="stakeholder">
+                        stakeholder
+                      </option>
+
+                    </select>
+
+                  </div>
 
                   {/* LANGUAGES */}
 
