@@ -7,8 +7,9 @@ import {
 
 interface AuthContextType {
   token: string | null;
+  role: string | null;
   isAuthenticated: boolean;
-  login: (accessToken: string) => void;
+  login: (accessToken: string, userRole: string) => void;
   logout: () => void;
 }
 
@@ -27,14 +28,27 @@ export function AuthProvider({
     localStorage.getItem('access_token')
   );
 
-  const login = (accessToken: string) => {
+  const [role, setRole] = useState<string | null>(
+    localStorage.getItem('user_role')
+  );
+
+  const login = (
+    accessToken: string,
+    userRole: string
+  ) => {
     localStorage.setItem('access_token', accessToken);
+    localStorage.setItem('user_role', userRole);
+
     setToken(accessToken);
+    setRole(userRole);
   };
 
   const logout = () => {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('user_role');
+
     setToken(null);
+    setRole(null);
   };
 
   const isAuthenticated = token !== null;
@@ -43,6 +57,7 @@ export function AuthProvider({
     <AuthContext.Provider
       value={{
         token,
+        role,
         isAuthenticated,
         login,
         logout,

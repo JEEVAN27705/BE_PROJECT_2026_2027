@@ -72,7 +72,7 @@ export default function Login() {
 
       // Store JWT through AuthContext
       if (data.access_token) {
-        login(data.access_token);
+        login(data.access_token, role);
       }
 
       // Remember me
@@ -81,7 +81,7 @@ export default function Login() {
       } else {
         localStorage.removeItem('remember');
       }
-      
+
       // Role-based navigation
       switch (role) {
         case 'hr':
@@ -217,6 +217,7 @@ export default function Login() {
                     {option.label}
                   </option>
                 ))}
+                
               </select>
             </div>
 
