@@ -89,7 +89,7 @@ export default function Login() {
           break;
 
         case 'team_lead':
-          navigate('/team-lead', { replace: true });
+          navigate('/team-lead/dashboard', { replace: true });
           break;
 
         case 'manager':

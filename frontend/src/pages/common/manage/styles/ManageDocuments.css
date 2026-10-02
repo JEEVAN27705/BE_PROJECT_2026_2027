@@ -1,0 +1,549 @@
+/* =========================================================
+   MANAGE DOCUMENTS PAGE
+   ========================================================= */
+
+.manage-documents-page {
+  min-height: 100vh;
+  width: 100%;
+  background: #f7f8fc;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.manage-documents-content {
+  margin-left: 270px;
+  min-height: 100vh;
+  width: calc(100% - 270px);
+  padding: 55px 60px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.manage-documents-header {
+  max-width: 900px;
+  margin-bottom: 35px;
+}
+
+.manage-documents-label {
+  display: block;
+
+  color: #5759d9;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.manage-documents-header h1 {
+  margin: 8px 0 0;
+
+  color: #191a3e;
+
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.manage-documents-header p {
+  margin: 10px 0 0;
+
+  color: #777b94;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   MAIN CARD
+   ========================================================= */
+
+.manage-assignment-card {
+  max-width: 900px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7e8f0;
+  border-radius: 18px;
+
+  padding: 32px;
+
+  box-shadow:
+    0 10px 30px rgba(30, 32, 70, 0.06);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.manage-assignment-header {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 18px;
+
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid #eeeef4;
+}
+
+.manage-assignment-number {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #efeeff;
+
+  color: #4d50d2;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.manage-assignment-header h2 {
+  margin: 0;
+
+  color: #252642;
+
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.manage-assignment-header p {
+  margin: 6px 0 0;
+
+  color: #81849b;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.manage-assignment-section {
+  padding: 25px 0;
+
+  border-bottom: 1px solid #eeeef4;
+}
+
+.manage-assignment-section:last-child {
+  border-bottom: none;
+
+  padding-bottom: 0;
+}
+
+.manage-assignment-section h3 {
+  margin: 0 0 8px;
+
+  color: #292b4c;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.manage-assignment-section p {
+  margin: 0;
+
+  color: #777b94;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   FIGMA BUTTON
+   ========================================================= */
+
+.manage-figma-link {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 15px;
+
+  padding: 10px 15px;
+
+  border-radius: 9px;
+
+  background: #f0efff;
+
+  color: #4c4fd0;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.manage-figma-link:hover {
+  background: #e6e4ff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   REQUIREMENTS
+   ========================================================= */
+
+.manage-assignment-section ul {
+  margin: 12px 0 0;
+
+  padding-left: 20px;
+}
+
+.manage-assignment-section li {
+  margin-bottom: 9px;
+
+  color: #656981;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+.manage-assignment-section li:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   FILE LIST
+   ========================================================= */
+
+.manage-file-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-top: 15px;
+}
+
+.manage-file-item {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 13px;
+
+  background: #f8f8fc;
+
+  border: 1px solid #ebebf2;
+
+  border-radius: 9px;
+}
+
+.manage-file-item span {
+  font-size: 14px;
+}
+
+.manage-file-item code {
+  color: #4d506d;
+
+  font-family: Consolas, monospace;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   COMMAND BOX
+   ========================================================= */
+
+.manage-command-box {
+  margin-top: 15px;
+
+  padding: 17px;
+
+  border-radius: 11px;
+
+  background: #191a3e;
+
+  overflow-x: auto;
+}
+
+.manage-command-box div {
+  display: flex;
+
+  gap: 12px;
+
+  margin-bottom: 10px;
+}
+
+.manage-command-box div:last-child {
+  margin-bottom: 0;
+}
+
+.manage-command-box span {
+  width: 18px;
+
+  flex-shrink: 0;
+
+  color: #9b9de8;
+
+  font-size: 12px;
+}
+
+.manage-command-box code {
+  color: #e7e8ff;
+
+  font-family: Consolas, monospace;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PUSH SECTION
+   ========================================================= */
+
+.manage-push-section {
+  border-bottom: none;
+}
+
+.manage-push-section > p {
+  margin-bottom: 15px;
+}
+
+.manage-push-section strong {
+  color: #4d50d2;
+}
+
+
+/* =========================================================
+   DOCUMENT MANAGEMENT PREVIEW
+   ========================================================= */
+
+.manage-document-preview {
+  margin-top: 20px;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+  background: #f8f8fc;
+
+  border: 1px solid #ebebf2;
+}
+
+.manage-document-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 13px 0;
+
+  border-bottom: 1px solid #e8e8f0;
+}
+
+.manage-document-row:first-child {
+  padding-top: 0;
+}
+
+.manage-document-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.manage-document-info {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.manage-document-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #efeeff;
+
+  color: #4d50d2;
+
+  font-size: 13px;
+}
+
+.manage-document-name {
+  color: #4d506d;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.manage-document-meta {
+  margin-top: 3px;
+
+  color: #9294a8;
+
+  font-size: 11px;
+}
+
+.manage-document-status {
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  background: #edf8f1;
+
+  color: #328153;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   PR FLOW
+   ========================================================= */
+
+.manage-pr-flow {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 22px;
+
+  padding: 16px;
+
+  background: #f8f8fc;
+
+  border: 1px solid #ebebf2;
+
+  border-radius: 12px;
+}
+
+.manage-pr-step {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #555873;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.manage-pr-step strong {
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e9e8ff;
+
+  color: #4d50d2;
+
+  font-size: 11px;
+}
+
+.manage-pr-arrow {
+  color: #a0a2b5;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .manage-documents-content {
+    padding: 45px 35px;
+  }
+
+  .manage-assignment-card {
+    max-width: 100%;
+  }
+}
+
+
+@media (max-width: 800px) {
+
+  .manage-documents-content {
+    margin-left: 270px;
+
+    width: calc(100% - 270px);
+
+    padding: 35px 25px;
+  }
+
+  .manage-assignment-card {
+    padding: 24px;
+  }
+
+  .manage-assignment-header {
+    gap: 13px;
+  }
+
+  .manage-assignment-header h2 {
+    font-size: 17px;
+  }
+
+  .manage-file-list {
+    flex-direction: column;
+  }
+
+  .manage-file-item {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .manage-command-box code {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .manage-document-row {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .manage-document-status {
+    flex-shrink: 0;
+  }
+}

@@ -1,0 +1,452 @@
+/* =========================================================
+   UPLOAD DOCUMENTS PAGE
+   ========================================================= */
+
+.upload-documents-page {
+  min-height: 100vh;
+  width: 100%;
+  background: #f7f8fc;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.upload-documents-content {
+  margin-left: 270px;
+  min-height: 100vh;
+  width: calc(100% - 270px);
+  padding: 55px 60px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.upload-documents-header {
+  max-width: 900px;
+  margin-bottom: 35px;
+}
+
+.upload-documents-label {
+  display: block;
+
+  color: #5759d9;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.upload-documents-header h1 {
+  margin: 8px 0 0;
+
+  color: #191a3e;
+
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.upload-documents-header p {
+  margin: 10px 0 0;
+
+  color: #777b94;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   MAIN CARD
+   ========================================================= */
+
+.upload-assignment-card {
+  max-width: 900px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7e8f0;
+  border-radius: 18px;
+
+  padding: 32px;
+
+  box-shadow:
+    0 10px 30px rgba(30, 32, 70, 0.06);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.upload-assignment-header {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 18px;
+
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid #eeeef4;
+}
+
+.upload-assignment-number {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #efeeff;
+
+  color: #4d50d2;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.upload-assignment-header h2 {
+  margin: 0;
+
+  color: #252642;
+
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.upload-assignment-header p {
+  margin: 6px 0 0;
+
+  color: #81849b;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.upload-assignment-section {
+  padding: 25px 0;
+
+  border-bottom: 1px solid #eeeef4;
+}
+
+.upload-assignment-section:last-child {
+  border-bottom: none;
+
+  padding-bottom: 0;
+}
+
+.upload-assignment-section h3 {
+  margin: 0 0 8px;
+
+  color: #292b4c;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.upload-assignment-section p {
+  margin: 0;
+
+  color: #777b94;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   FIGMA BUTTON
+   ========================================================= */
+
+.upload-figma-link {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 15px;
+
+  padding: 10px 15px;
+
+  border-radius: 9px;
+
+  background: #f0efff;
+
+  color: #4c4fd0;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.upload-figma-link:hover {
+  background: #e6e4ff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   REQUIREMENTS
+   ========================================================= */
+
+.upload-assignment-section ul {
+  margin: 12px 0 0;
+
+  padding-left: 20px;
+}
+
+.upload-assignment-section li {
+  margin-bottom: 9px;
+
+  color: #656981;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+.upload-assignment-section li:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   FILE LIST
+   ========================================================= */
+
+.upload-file-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-top: 15px;
+}
+
+.upload-file-item {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 13px;
+
+  background: #f8f8fc;
+
+  border: 1px solid #ebebf2;
+
+  border-radius: 9px;
+}
+
+.upload-file-item span {
+  font-size: 14px;
+}
+
+.upload-file-item code {
+  color: #4d506d;
+
+  font-family: Consolas, monospace;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   COMMAND BOX
+   ========================================================= */
+
+.upload-command-box {
+  margin-top: 15px;
+
+  padding: 17px;
+
+  border-radius: 11px;
+
+  background: #191a3e;
+
+  overflow-x: auto;
+}
+
+.upload-command-box div {
+  display: flex;
+
+  gap: 12px;
+
+  margin-bottom: 10px;
+}
+
+.upload-command-box div:last-child {
+  margin-bottom: 0;
+}
+
+.upload-command-box span {
+  width: 18px;
+
+  flex-shrink: 0;
+
+  color: #9b9de8;
+
+  font-size: 12px;
+}
+
+.upload-command-box code {
+  color: #e7e8ff;
+
+  font-family: Consolas, monospace;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PUSH SECTION
+   ========================================================= */
+
+.upload-push-section {
+  border-bottom: none;
+}
+
+.upload-push-section > p {
+  margin-bottom: 15px;
+}
+
+.upload-push-section strong {
+  color: #4d50d2;
+}
+
+
+/* =========================================================
+   PR FLOW
+   ========================================================= */
+
+.upload-pr-flow {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 22px;
+
+  padding: 16px;
+
+  background: #f8f8fc;
+
+  border: 1px solid #ebebf2;
+
+  border-radius: 12px;
+}
+
+.upload-pr-step {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #555873;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.upload-pr-step strong {
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e9e8ff;
+
+  color: #4d50d2;
+
+  font-size: 11px;
+}
+
+.upload-pr-arrow {
+  color: #a0a2b5;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .upload-documents-content {
+    padding: 45px 35px;
+  }
+
+  .upload-assignment-card {
+    max-width: 100%;
+  }
+}
+
+
+@media (max-width: 800px) {
+
+  .upload-documents-content {
+    margin-left: 270px;
+
+    width: calc(100% - 270px);
+
+    padding: 35px 25px;
+  }
+
+  .upload-assignment-card {
+    padding: 24px;
+  }
+
+  .upload-assignment-header {
+    gap: 13px;
+  }
+
+  .upload-assignment-header h2 {
+    font-size: 17px;
+  }
+
+  .upload-file-list {
+    flex-direction: column;
+  }
+
+  .upload-file-item {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .upload-command-box code {
+    white-space: normal;
+    word-break: break-word;
+  }
+}

@@ -23,6 +23,7 @@ function Sidebar() {
         <div className="brand-content">
           <h1>AI Knowledge</h1>
           <h1>Assistant</h1>
+
           <span>
             {role === 'hr'
               ? 'HR Workspace'
@@ -45,6 +46,7 @@ function Sidebar() {
         {/* ==================== HR ==================== */}
         {role === 'hr' && (
           <>
+
             {/* Dashboard */}
             <NavLink
               to="/hr/dashboard"
@@ -119,12 +121,14 @@ function Sidebar() {
 
               <span>AI Assistant</span>
             </NavLink>
+
           </>
         )}
 
         {/* ==================== TEAM LEAD ==================== */}
         {role === 'team_lead' && (
           <>
+
             {/* Dashboard */}
             <NavLink
               to="/team-lead/dashboard"
@@ -143,26 +147,43 @@ function Sidebar() {
               <span>Dashboard</span>
             </NavLink>
 
-            {/* Manage Employee */}
+            {/* Upload Documents */}
             <NavLink
-              to="/team-lead/manage-employee"
+              to="/documents/upload"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? 'active' : ''}`
               }
             >
               <span className="nav-icon">
                 <svg viewBox="0 0 24 24">
-                  <circle cx="8" cy="8" r="3" />
-                  <path d="M2.5 20c.5-3.2 2.5-5 5.5-5s5 1.8 5.5 5" />
-                  <circle cx="17" cy="9" r="2.5" />
-                  <path d="M14.5 20c.3-2.5 1.4-4 3.5-4s3.2 1.5 3.5 4" />
+                  <path d="M12 16V4" />
+                  <path d="M7 9l5-5 5 5" />
+                  <path d="M5 14v5h14v-5" />
                 </svg>
               </span>
 
-              <span>Manage Employee</span>
+              <span>Upload Documents</span>
             </NavLink>
 
-            {/* AI Assistant */}
+            {/* Manage Documents */}
+            <NavLink
+              to="/documents/manage"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? 'active' : ''}`
+              }
+            >
+              <span className="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 5h16v14H4z" />
+                  <path d="M8 9h8" />
+                  <path d="M8 13h6" />
+                </svg>
+              </span>
+
+              <span>Manage Documents</span>
+            </NavLink>
+
+             {/* AI Assistant */}
             <NavLink
               to="/employee"
               className={({ isActive }) =>
@@ -181,65 +202,13 @@ function Sidebar() {
               <span>AI Assistant</span>
             </NavLink>
 
-            {/* Upload Files */}
-            <NavLink
-              to="/files/upload"
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? 'active' : ''}`
-              }
-            >
-              <span className="nav-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 16V4" />
-                  <path d="M7 9l5-5 5 5" />
-                  <path d="M5 14v5h14v-5" />
-                </svg>
-              </span>
-
-              <span>Upload Files</span>
-            </NavLink>
-
-            {/* Manage Files */}
-            <NavLink
-              to="/files/manage"
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? 'active' : ''}`
-              }
-            >
-              <span className="nav-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 5h16v14H4z" />
-                  <path d="M8 9h8" />
-                  <path d="M8 13h6" />
-                </svg>
-              </span>
-
-              <span>Manage Files</span>
-            </NavLink>
-
-            {/* Project Tracker */}
-            <NavLink
-              to="/team-lead/project-tracker"
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? 'active' : ''}`
-              }
-            >
-              <span className="nav-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 19V5" />
-                  <path d="M4 18h16" />
-                  <path d="M7 15l4-4 3 2 5-6" />
-                </svg>
-              </span>
-
-              <span>Project Tracker</span>
-            </NavLink>
           </>
         )}
 
         {/* ==================== MANAGER ==================== */}
         {role === 'manager' && (
           <>
+
             {/* Dashboard */}
             <NavLink
               to="/manager/dashboard"
@@ -258,25 +227,6 @@ function Sidebar() {
               <span>Dashboard</span>
             </NavLink>
 
-            {/* Manage Employee */}
-            <NavLink
-              to="/manager/manage-employee"
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? 'active' : ''}`
-              }
-            >
-              <span className="nav-icon">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="8" cy="8" r="3" />
-                  <path d="M2.5 20c.5-3.2 2.5-5 5.5-5s5 1.8 5.5 5" />
-                  <circle cx="17" cy="9" r="2.5" />
-                  <path d="M14.5 20c.3-2.5 1.4-4 3.5-4s3.2 1.5 3.5 4" />
-                </svg>
-              </span>
-
-              <span>Manage Employee</span>
-            </NavLink>
-
             {/* AI Assistant */}
             <NavLink
               to="/employee"
@@ -296,9 +246,9 @@ function Sidebar() {
               <span>AI Assistant</span>
             </NavLink>
 
-            {/* Upload Files */}
+            {/* Upload Documents */}
             <NavLink
-              to="/files/upload"
+              to="/documents/upload"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? 'active' : ''}`
               }
@@ -311,12 +261,12 @@ function Sidebar() {
                 </svg>
               </span>
 
-              <span>Upload Files</span>
+              <span>Upload Documents</span>
             </NavLink>
 
-            {/* Manage Files */}
+            {/* Manage Documents */}
             <NavLink
-              to="/files/manage"
+              to="/documents/manage"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? 'active' : ''}`
               }
@@ -329,26 +279,9 @@ function Sidebar() {
                 </svg>
               </span>
 
-              <span>Manage Files</span>
+              <span>Manage Documents</span>
             </NavLink>
-
-            {/* Project Tracker */}
-            <NavLink
-              to="/manager/project-tracker"
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? 'active' : ''}`
-              }
-            >
-              <span className="nav-icon">
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 19V5" />
-                  <path d="M4 18h16" />
-                  <path d="M7 15l4-4 3 2 5-6" />
-                </svg>
-              </span>
-
-              <span>Project Tracker</span>
-            </NavLink>
+            
           </>
         )}
 
@@ -373,6 +306,7 @@ function Sidebar() {
         </button>
 
       </div>
+
     </aside>
   );
 }
