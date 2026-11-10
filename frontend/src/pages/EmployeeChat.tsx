@@ -1,9 +1,12 @@
 import {
   useState,
+  useEffect,
+  useRef,
   type FormEvent,
   type KeyboardEvent,
 } from 'react';
-import { useNavigate } from "react-router-dom";
+
+import Sidebar from '../components/Sidebar';
 import '../styles/EmployeeChat.css';
 
 interface Message {
@@ -15,14 +18,20 @@ interface Message {
 export default function EmployeeChat() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
-  const navigate = useNavigate();
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Automatically scroll to the latest message
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: 'smooth',
+    });
+  }, [messages]);
 
   const handleSend = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!message.trim()) {
-      return;
-    }
+    if (!message.trim()) return;
 
     const userMessage: Message = {
       id: Date.now(),
@@ -57,120 +66,20 @@ export default function EmployeeChat() {
   ) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-
-      if (message.trim()) {
-        e.currentTarget.form?.requestSubmit();
-      }
+      e.currentTarget.form?.requestSubmit();
     }
-  };
-
-  const handleNewChat = () => {
-    setMessages([]);
-    setMessage('');
   };
 
   return (
     <div className="chat-page">
 
       {/* Sidebar */}
-      <aside className="chat-sidebar">
+      <Sidebar />
 
-        {/* Logo / Brand */}
-        <div className="sidebar-brand">
-          <div className="brand-icon">
-            ✦
-          </div>
-
-          <div>
-            <h2>AI Knowledge</h2>
-            <span>Assistant</span>
-          </div>
-        </div>
-
-        {/* New Chat */}
-        <button
-          className="new-chat-button"
-          onClick={handleNewChat}
-        >
-          <span className="new-chat-icon">+</span>
-          <span>New chat</span>
-        </button>
-
-        {/* Chat History */}
-        <div className="sidebar-section">
-
-          <p className="sidebar-heading">
-            Chats
-          </p>
-
-          {messages.length > 0 ? (
-            <button className="chat-history-item">
-              <span className="history-icon">◌</span>
-              <span>Current conversation</span>
-            </button>
-          ) : (
-            <p className="no-chats">
-              No previous chats
-            </p>
-          )}
-
-        </div>
-
-        {/* Bottom User Area */}
-        <div className="sidebar-bottom">
-
-          <div className="employee-profile">
-
-            <div className="profile-avatar">
-              E
-            </div>
-
-            <div className="profile-info">
-              <span className="profile-name">
-                Employee
-              </span>
-
-              <span className="profile-role">
-                Employee
-              </span>
-            </div>
-
-          </div>
-
-          <button className="logout-button"
-            onClick={() => navigate("/login")}
-            >
-            <span>↪</span>
-            Logout
-          </button>
-
-        </div>
-
-      </aside>
-
-      {/* Main Chat */}
+      {/* Main Chat Area */}
       <section className="chat-main">
 
-        {/* Header */}
-        <header className="chat-header">
-
-          <div className="mobile-brand">
-            <div className="brand-icon">
-              ✦
-            </div>
-
-            <span>
-              AI Knowledge Assistant
-            </span>
-          </div>
-
-          <div className="header-role">
-            Employee
-          </div>
-
-        </header>
-
-        {/* Messages */}
+        {/* Chat Content */}
         <main className="chat-content">
 
           {messages.length === 0 ? (
@@ -181,14 +90,31 @@ export default function EmployeeChat() {
                 ✦
               </div>
 
-              <h1>
-                How can I help you?
-              </h1>
+              <h1>How can I help you?</h1>
 
               <p>
-                Ask me about projects, tasks, bugs,
-                documents, or organizational knowledge.
+                Ask me about projects, tasks, bugs, documents,
+                or organizational knowledge.
               </p>
+
+              <div className="suggestion-list">
+
+                <div className="suggestion-item">
+                  <span>📁</span>
+                  Ask about project details
+                </div>
+
+                <div className="suggestion-item">
+                  <span>📋</span>
+                  Check pending tasks
+                </div>
+
+                <div className="suggestion-item">
+                  <span>📄</span>
+                  Search related to organizational documents
+                </div>
+
+              </div>
 
             </div>
 
@@ -223,13 +149,15 @@ export default function EmployeeChat() {
 
               ))}
 
+              <div ref={messagesEndRef} />
+
             </div>
 
           )}
 
         </main>
 
-        {/* Input */}
+        {/* Message Input */}
         <div className="chat-input-container">
 
           <form
@@ -239,11 +167,9 @@ export default function EmployeeChat() {
 
             <textarea
               value={message}
-              onChange={(e) =>
-                setMessage(e.target.value)
-              }
+              onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Message AI Knowledge Assistant..."
+              placeholder="Ask anything about your organization..."
               rows={1}
             />
 
@@ -258,7 +184,7 @@ export default function EmployeeChat() {
           </form>
 
           <p className="chat-disclaimer">
-            AI can make mistakes. Check important information.
+            AI can make mistakes. Verify important information.
           </p>
 
         </div>
