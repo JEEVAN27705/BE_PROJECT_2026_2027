@@ -2,15 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.auth import router as auth_router
-
+from app.api.v1.knowledge import router as knowledge_router
 
 app = FastAPI(
     title="AI Knowledge Loss Prevention System",
     version="1.0.0"
 )
 
-
-# Allow frontend to communicate with backend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -23,12 +21,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# Authentication routes
-app.include_router(
-    auth_router,
-    prefix="/api/v1"
-)
+app.include_router(auth_router, prefix="/api/v1")
+app.include_router(knowledge_router, prefix="/api/v1")
 
 
 @app.get("/")

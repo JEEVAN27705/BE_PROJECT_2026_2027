@@ -7,6 +7,7 @@ import {
 } from 'react';
 
 import Sidebar from '../components/Sidebar';
+import { useAuth } from '../context/AuthContext';
 import '../styles/EmployeeChat.css';
 
 interface Message {
@@ -15,9 +16,17 @@ interface Message {
   sender: 'user' | 'ai';
 }
 
+interface KnowledgeResponse {
+  answer: string;
+  source_code: string | null;
+}
+
 export default function EmployeeChat() {
+  const { token } = useAuth();
+
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -26,16 +35,31 @@ export default function EmployeeChat() {
     messagesEndRef.current?.scrollIntoView({
       behavior: 'smooth',
     });
-  }, [messages]);
+  }, [messages, isLoading]);
 
-  const handleSend = (e: FormEvent<HTMLFormElement>) => {
+  // Send message to the backend AI
+  const handleSend = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!message.trim()) return;
+    const question = message.trim();
+
+    if (!question || isLoading) return;
+
+    if (!token) {
+      setMessages((previous) => [
+        ...previous,
+        {
+          id: Date.now(),
+          text: 'Your session has expired. Please log in again.',
+          sender: 'ai',
+        },
+      ]);
+      return;
+    }
 
     const userMessage: Message = {
       id: Date.now(),
-      text: message.trim(),
+      text: question,
       sender: 'user',
     };
 
@@ -45,12 +69,36 @@ export default function EmployeeChat() {
     ]);
 
     setMessage('');
+    setIsLoading(true);
 
-    // Temporary AI response
-    setTimeout(() => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/knowledge/ask`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            question: question,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.detail || 'Unable to get an AI response.'
+        );
+      }
+
+      const data: KnowledgeResponse = result;
+
       const aiMessage: Message = {
         id: Date.now() + 1,
-        text: 'I am your AI Knowledge Assistant. I will help you find information about your organization.',
+        text: data.answer,
         sender: 'ai',
       };
 
@@ -58,7 +106,25 @@ export default function EmployeeChat() {
         ...previous,
         aiMessage,
       ]);
-    }, 500);
+
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong. Please try again.';
+
+      setMessages((previous) => [
+        ...previous,
+        {
+          id: Date.now() + 1,
+          text: `Error: ${errorMessage}`,
+          sender: 'ai',
+        },
+      ]);
+
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyDown = (
@@ -149,6 +215,18 @@ export default function EmployeeChat() {
 
               ))}
 
+              {isLoading && (
+                <div className="message-row ai">
+                  <div className="message-avatar">
+                    ✦
+                  </div>
+
+                  <div className="message-bubble">
+                    Thinking...
+                  </div>
+                </div>
+              )}
+
               <div ref={messagesEndRef} />
 
             </div>
@@ -171,11 +249,12 @@ export default function EmployeeChat() {
               onKeyDown={handleKeyDown}
               placeholder="Ask anything about your organization..."
               rows={1}
+              disabled={isLoading}
             />
 
             <button
               type="submit"
-              disabled={!message.trim()}
+              disabled={!message.trim() || isLoading}
               aria-label="Send message"
             >
               ↑
