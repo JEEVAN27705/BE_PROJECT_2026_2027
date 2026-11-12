@@ -1,0 +1,5 @@
+chromadb
+sentence-transformers
+requests
+tree-sitter
+tree-sitter-languages

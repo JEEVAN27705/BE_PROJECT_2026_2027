@@ -1,0 +1,47 @@
+
+# Python virtual environment
+venv/
+.venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+.neon
+
+# ChromaDB persistent database
+processing/chroma_db/
+
+# Cloned GitHub repositories
+repositories/
+
+# Generated output files
+processing/output/
+output/
+
+# Model downloads and caches
+.cache/
+cache/
+models/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
