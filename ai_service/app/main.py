@@ -40,6 +40,8 @@ def resolve_chroma_path() -> Path:
 
 COLLECTION_NAME = os.getenv("CHROMA_COLLECTION_NAME", "github_repository")
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "all-MiniLM-L6-v2")
+NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "1024"))
+NUM_PREDICT = int(os.getenv("OLLAMA_NUM_PREDICT", "512"))
 
 OLLAMA_BASE_URL = os.getenv(
     "OLLAMA_BASE_URL",
@@ -53,7 +55,15 @@ else:
 
 
 def resolve_llm_model() -> str:
-    """Detects available model from Ollama or defaults to configured model."""
+    """Detects available model from Ollama or falls back to configured default.
+
+    Priority:
+    1. LLM_MODEL_NAME env var (explicitly configured)
+    2. 'qwen2.5-lite' custom model built from Modelfile (memory-optimised, preferred)
+    3. Any qwen2.5 variant found in Ollama
+    4. Any model found in Ollama
+    5. Hardcoded fallback: qwen2.5-lite
+    """
     configured = os.getenv("LLM_MODEL_NAME")
     if configured:
         return configured
@@ -63,17 +73,25 @@ def resolve_llm_model() -> str:
         if resp.status_code == 200:
             models = resp.json().get("models", [])
             names = [m.get("name", "") for m in models]
+            # Prefer the memory-optimised custom model built from Modelfile
             for n in names:
-                if "qwen2.5:3b" in n:
-                    return "qwen2.5:3b"
+                if "qwen2.5-lite" in n:
+                    return "qwen2.5-lite"
+            # Fall back to any qwen2.5 variant (smallest first)
+            for n in names:
                 if "qwen2.5:0.5b" in n:
                     return "qwen2.5:0.5b"
+            for n in names:
+                if "qwen2.5" in n:
+                    return n
+            # Use whatever is available
             if names:
                 return names[0]
     except Exception:
         pass
 
-    return "qwen2.5:0.5b"
+    # Hardcoded safe fallback
+    return "qwen2.5-lite"
 
 
 # Singletons
@@ -251,9 +269,12 @@ Now generate the answer.
         "prompt": prompt,
         "stream": False,
         "options": {
-            "temperature": 0.1
-        }
-    }
+            "temperature": 0.1,
+            # Cap context window to keep KV-cache within Render's 512MB free tier
+            "num_ctx": NUM_CTX,
+            # Cap generated tokens to conserve RAM during generation
+            "num_predict": NUM_PREDICT
+        }    }
 
     logger.info(f"Calling Ollama at {OLLAMA_GENERATE_URL} with model '{model_to_use}'...")
 
