@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.core.dependencies import get_current_user
 from app.models.user import User
@@ -16,9 +16,14 @@ def ask_question(
     request: KnowledgeQuestion,
     current_user: User = Depends(get_current_user)
 ):
-    result = ask_repository_question(request.question)
-
-    return {
-        "answer": result["answer"],
-        "source_code": result["source_code"]
-    }
+    try:
+        result = ask_repository_question(request.question)
+        return {
+            "answer": result["answer"],
+            "source_code": result.get("source_code")
+        }
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=str(exc)
+        )

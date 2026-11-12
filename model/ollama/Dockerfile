@@ -2,6 +2,9 @@ FROM ollama/ollama:latest
 
 ENV OLLAMA_HOST=0.0.0.0:11434
 
+COPY model/ollama/start.sh /start.sh
+RUN chmod +x /start.sh
+
 EXPOSE 11434
 
-CMD ["serve"]
+ENTRYPOINT ["/start.sh"]

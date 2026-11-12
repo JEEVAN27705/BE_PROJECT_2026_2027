@@ -40,7 +40,6 @@ def resolve_chroma_path() -> Path:
 
 COLLECTION_NAME = os.getenv("CHROMA_COLLECTION_NAME", "github_repository")
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "all-MiniLM-L6-v2")
-LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "qwen2.5:3b")
 
 OLLAMA_BASE_URL = os.getenv(
     "OLLAMA_BASE_URL",
@@ -51,6 +50,31 @@ if OLLAMA_BASE_URL.endswith("/api/generate"):
     OLLAMA_GENERATE_URL = OLLAMA_BASE_URL
 else:
     OLLAMA_GENERATE_URL = f"{OLLAMA_BASE_URL}/api/generate"
+
+
+def resolve_llm_model() -> str:
+    """Detects available model from Ollama or defaults to configured model."""
+    configured = os.getenv("LLM_MODEL_NAME")
+    if configured:
+        return configured
+
+    try:
+        resp = httpx.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=5.0)
+        if resp.status_code == 200:
+            models = resp.json().get("models", [])
+            names = [m.get("name", "") for m in models]
+            for n in names:
+                if "qwen2.5:3b" in n:
+                    return "qwen2.5:3b"
+                if "qwen2.5:0.5b" in n:
+                    return "qwen2.5:0.5b"
+            if names:
+                return names[0]
+    except Exception:
+        pass
+
+    return "qwen2.5:0.5b"
+
 
 # Singletons
 embedding_model = None
@@ -220,8 +244,10 @@ RETRIEVED REPOSITORY EVIDENCE:
 Now generate the answer.
 """
 
+    model_to_use = resolve_llm_model()
+
     payload = {
-        "model": LLM_MODEL_NAME,
+        "model": model_to_use,
         "prompt": prompt,
         "stream": False,
         "options": {
@@ -229,7 +255,7 @@ Now generate the answer.
         }
     }
 
-    logger.info(f"Calling Ollama at {OLLAMA_GENERATE_URL} with model {LLM_MODEL_NAME}...")
+    logger.info(f"Calling Ollama at {OLLAMA_GENERATE_URL} with model '{model_to_use}'...")
 
     try:
         response = httpx.post(
@@ -239,11 +265,49 @@ Now generate the answer.
         )
         response.raise_for_status()
         result = response.json()
-    except httpx.HTTPError as error:
+    except httpx.HTTPStatusError as error:
+        if error.response.status_code == 404:
+            logger.warning(
+                f"Model '{model_to_use}' not found on Ollama. Attempting auto-pull..."
+            )
+            try:
+                pull_url = f"{OLLAMA_BASE_URL}/api/pull"
+                pull_resp = httpx.post(
+                    pull_url,
+                    json={"model": model_to_use, "stream": False},
+                    timeout=300.0
+                )
+                if pull_resp.status_code == 200:
+                    logger.info(f"Model '{model_to_use}' pulled successfully! Retrying generation...")
+                    retry_resp = httpx.post(
+                        OLLAMA_GENERATE_URL,
+                        json=payload,
+                        timeout=180.0
+                    )
+                    retry_resp.raise_for_status()
+                    return retry_resp.json().get("response", "")
+            except Exception as pull_err:
+                logger.error(f"Auto-pull of '{model_to_use}' failed: {pull_err}")
+
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail=(
+                    f"Ollama returned 404: Model '{model_to_use}' is not installed in your Ollama service. "
+                    f"Please pull the model in Ollama (POST /api/pull) or use 'qwen2.5:0.5b' "
+                    f"if running on Render free tier (512MB RAM)."
+                )
+            ) from error
+
         logger.error(f"Failed to communicate with Ollama service: {error}")
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail=f"Could not communicate with Ollama service: {error}"
+        ) from error
+    except httpx.HTTPError as error:
+        logger.error(f"Failed to connect to Ollama service: {error}")
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Could not connect to Ollama service at {OLLAMA_GENERATE_URL}: {error}"
         ) from error
     except Exception as error:
         logger.error(f"Unexpected error communicating with Ollama: {error}")
@@ -302,7 +366,7 @@ def root():
     return {
         "message": "AI Knowledge Retrieval Service is running",
         "collection": COLLECTION_NAME,
-        "model": LLM_MODEL_NAME
+        "model": resolve_llm_model()
     }
 
 
@@ -322,7 +386,7 @@ def health():
         "chroma_records": record_count,
         "collection": COLLECTION_NAME,
         "ollama_url": OLLAMA_GENERATE_URL,
-        "model": LLM_MODEL_NAME
+        "model": resolve_llm_model()
     }
 
 
