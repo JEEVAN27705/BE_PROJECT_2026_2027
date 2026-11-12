@@ -7,10 +7,10 @@ COPY backend/requirements.txt ./requirements.txt
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY backend/ ./backend/
+COPY backend/app/ ./app/
 COPY model/ ./model/
 
-ENV PYTHONPATH="/app/backend:/app"
+ENV PYTHONPATH=/app
 
 EXPOSE 8000
 
