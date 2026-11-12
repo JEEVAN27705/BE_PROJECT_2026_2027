@@ -1,31 +1,62 @@
 
 from pathlib import Path
+import os
 import requests
 import chromadb
+
 from sentence_transformers import SentenceTransformer
 
 
+# --------------------------------------------------
+# CONFIGURATION
+# --------------------------------------------------
+
 PROCESSING_DIR = Path(__file__).resolve().parent
+
 DATABASE_DIR = PROCESSING_DIR / "chroma_db"
 
 COLLECTION_NAME = "github_repository"
 
 EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
+
 LLM_MODEL_NAME = "qwen2.5:3b"
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
 
+# Local Docker / local Ollama default:
+# http://localhost:11434
+#
+# Render:
+# Set OLLAMA_BASE_URL to the private address
+# of your separate Ollama service.
+
+OLLAMA_BASE_URL = os.getenv(
+    "OLLAMA_BASE_URL",
+    "http://localhost:11434"
+).rstrip("/")
+
+OLLAMA_URL = f"{OLLAMA_BASE_URL}/api/generate"
+
+
+# --------------------------------------------------
+# LOAD EMBEDDING MODEL
+# --------------------------------------------------
 
 def load_embedding_model():
 
-    print("Loading embedding model...")
+    print("\nLoading embedding model...")
 
-    model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+    model = SentenceTransformer(
+        EMBEDDING_MODEL_NAME
+    )
 
     print("Embedding model loaded successfully!")
 
     return model
 
+
+# --------------------------------------------------
+# CONNECT TO CHROMADB
+# --------------------------------------------------
 
 def connect_database():
 
@@ -39,24 +70,39 @@ def connect_database():
         name=COLLECTION_NAME
     )
 
-    print("Total stored records:", collection.count())
+    print(
+        "Total stored records:",
+        collection.count()
+    )
 
     return collection
 
 
+# --------------------------------------------------
+# RETRIEVE RELEVANT CODE
+# --------------------------------------------------
+
 def retrieve_code(question, embedding_model, collection):
 
-    question_embedding = embedding_model.encode(question)
+    question_embedding = embedding_model.encode(
+        question
+    )
 
     results = collection.query(
-        query_embeddings=[question_embedding.tolist()],
+        query_embeddings=[
+            question_embedding.tolist()
+        ],
         n_results=1
     )
 
-    if not results["ids"][0]:
+    if not results["ids"] or not results["ids"][0]:
+
+        print("\nNo matching code was found.")
+
         return None
 
     metadata = results["metadatas"][0][0]
+
     code = results["documents"][0][0]
 
     retrieved_code = f"""
@@ -71,8 +117,11 @@ Source code:
 """
 
     print("\nRETRIEVAL VERIFICATION:")
+
     print("FILE:", metadata["file_path"])
+
     print("FUNCTION:", metadata["name"])
+
     print(
         "LINES:",
         metadata["start_line"],
@@ -80,14 +129,20 @@ Source code:
         metadata["end_line"]
     )
 
-    # Display actual retrieved source code
     print("\nRETRIEVED SOURCE CODE:")
+
     print("=" * 60)
+
     print(code)
+
     print("=" * 60)
 
     return retrieved_code
 
+
+# --------------------------------------------------
+# GENERATE ANSWER USING OLLAMA
+# --------------------------------------------------
 
 def generate_answer(question, retrieved_code):
 
@@ -189,6 +244,10 @@ Now generate the answer.
         }
     }
 
+    print("\nConnecting to Ollama:")
+
+    print(OLLAMA_URL)
+
     response = requests.post(
         OLLAMA_URL,
         json=payload,
@@ -199,8 +258,18 @@ Now generate the answer.
 
     result = response.json()
 
+    if "response" not in result:
+
+        raise ValueError(
+            "Ollama returned an unexpected response."
+        )
+
     return result["response"]
 
+
+# --------------------------------------------------
+# MAIN FUNCTION
+# --------------------------------------------------
 
 def main():
 
@@ -214,12 +283,16 @@ def main():
             "\nAsk something about the repository (or type exit): "
         )
 
-        if question.lower() == "exit":
-            print("Assistant stopped.")
+        if question.strip().lower() == "exit":
+
+            print("\nAssistant stopped.")
+
             break
 
         if question.strip() == "":
-            print("Please enter a question.")
+
+            print("\nPlease enter a question.")
+
             continue
 
         retrieved_code = retrieve_code(
@@ -229,7 +302,7 @@ def main():
         )
 
         if retrieved_code is None:
-            print("\nNo matching code was found.")
+
             continue
 
         print("\nGenerating answer using Qwen...")
@@ -242,15 +315,30 @@ def main():
             )
 
             print("\nAI ASSISTANT RESPONSE:")
+
             print("=" * 60)
+
             print(answer)
+
             print("=" * 60)
 
         except requests.exceptions.RequestException as error:
 
             print("\nCould not connect to Ollama.")
+
+            print("Error:", error)
+
+        except ValueError as error:
+
+            print("\nInvalid Ollama response.")
+
             print("Error:", error)
 
 
+# --------------------------------------------------
+# PROGRAM ENTRY POINT
+# --------------------------------------------------
+
 if __name__ == "__main__":
+
     main()
